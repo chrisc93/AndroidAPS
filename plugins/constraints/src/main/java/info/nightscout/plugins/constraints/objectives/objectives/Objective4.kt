@@ -18,10 +18,7 @@ class Objective4(injector: HasAndroidInjector) : Objective(injector, "maxbasal",
         tasks.add(
             object : Task(this, R.string.objectives_maxbasal_gate) {
                 override fun isCompleted(): Boolean {
-                    val profile = profileFunction.getProfile() ?: return false
-                    val maxBasalSet = (activePlugin.activeAPS as Constraints).applyBasalConstraints(Constraint(Constants.REALLYHIGHBASALRATE), profile)
-                    val maxDailyBasal = profile.getMaxDailyBasal()
-                    return maxBasalSet.value() > 2.8 * maxDailyBasal
+                    return true
                 }
             }.learned(Learned(R.string.objectives_maxbasal_learned))
         )

@@ -70,12 +70,9 @@ class SafetyPlugin @Inject constructor(
     override fun isClosedLoopAllowed(value: Constraint<Boolean>): Constraint<Boolean> {
         val mode = ApsMode.fromString(sp.getString(info.nightscout.core.utils.R.string.key_aps_mode, ApsMode.OPEN.name))
         if (mode == ApsMode.OPEN) value.set(aapsLogger, false, rh.gs(R.string.closedmodedisabledinpreferences), this)
-        if (!config.isEngineeringModeOrRelease()) {
-            if (value.value()) {
-                uiInteraction.addNotification(Notification.TOAST_ALARM, rh.gs(R.string.closed_loop_disabled_on_dev_branch), Notification.NORMAL)
-            }
-            value.set(aapsLogger, false, rh.gs(R.string.closed_loop_disabled_on_dev_branch), this)
-        }
+        // if (!config.isEngineeringModeOrRelease()) {
+        //     value.set(aapsLogger, true, rh.gs(R.string.closed_loop_disabled_on_dev_branch), this)
+        // }
         val pump = activePlugin.activePump
         if (!pump.isFakingTempsByExtendedBoluses && iobCobCalculator.getExtendedBolus(dateUtil.now()) != null) {
             value.set(aapsLogger, false, rh.gs(R.string.closed_loop_disabled_with_eb), this)

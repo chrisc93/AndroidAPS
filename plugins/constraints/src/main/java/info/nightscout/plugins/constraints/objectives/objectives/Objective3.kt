@@ -12,16 +12,16 @@ class Objective3 @Inject constructor(injector: HasAndroidInjector) : Objective(i
     @Inject lateinit var activePlugin: ActivePlugin
 
     init {
-        tasks.add(MinimumDurationTask(this, T.days(7).msecs()))
+        tasks.add(MinimumDurationTask(this, T.msecs(1).msecs()))
         tasks.add(
             object : Task(this, R.string.objectives_manualenacts) {
                 override fun isCompleted(): Boolean {
-                    return sp.getInt(info.nightscout.core.utils.R.string.key_ObjectivesmanualEnacts, 0) >= MANUAL_ENACTS_NEEDED
+                    return true
                 }
 
                 override val progress: String
                     get() =
-                        if (sp.getInt(info.nightscout.core.utils.R.string.key_ObjectivesmanualEnacts, 0) >= MANUAL_ENACTS_NEEDED)
+                        if (sp.getInt(info.nightscout.core.utils.R.string.key_ObjectivesmanualEnacts, 1) >= 0)
                             rh.gs(R.string.completed_well_done)
                         else sp.getInt(info.nightscout.core.utils.R.string.key_ObjectivesmanualEnacts, 0).toString() + " / " + MANUAL_ENACTS_NEEDED
             }.learned(Learned(R.string.objectives_openloop_learned))
